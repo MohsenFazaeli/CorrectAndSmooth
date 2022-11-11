@@ -14,6 +14,7 @@ import torch.optim as optim
 from matplotlib import pyplot as plt
 from matplotlib.ticker import AutoMinorLocator, MultipleLocator
 from ogb.nodeproppred import DglNodePropPredDataset, Evaluator
+#from ogb.nodeproppred import PygNodePropPredDataset, Evaluator
 from outcome_correlation import prepare_folder
 
 from models import GAT
@@ -250,13 +251,14 @@ def main():
     argparser.add_argument("--plot-curves", action="store_true")
     args = argparser.parse_args()
 
-    if args.cpu:
+    if args.cpu or not th.cuda.is_available():
         device = th.device("cpu")
     else:
         device = th.device("cuda:%d" % args.gpu)
 
     # load data
     data = DglNodePropPredDataset(name="ogbn-arxiv")
+    #data = PygNodePropPredDataset(name="ogbn-arxiv")
     evaluator = Evaluator(name="ogbn-arxiv")
 
     splitted_idx = data.get_idx_split()

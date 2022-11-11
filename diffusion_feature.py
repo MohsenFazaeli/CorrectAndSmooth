@@ -1,3 +1,4 @@
+from pathlib import Path
 from tqdm import tqdm
 
 import torch
@@ -80,7 +81,10 @@ def community(data, post_fix):
     return result
 
 def spectral(data, post_fix):
+    #import julia
+    #julia.install()
     from julia.api import Julia
+    #jl = Julia(compiled_modules=True)
     jl = Julia(compiled_modules=False)
     from julia import Main
     Main.include("./norm_spec.jl")
@@ -141,6 +145,7 @@ def preprocess(data, preprocess = "diffusion", num_propagations = 10, p = None, 
     if preprocess == "diffusion":
         result = diffusion(data.x.numpy(), adj, num_propagations, p = p, alpha = alpha)
 
+    Path(f'embeddings').mkdir(parents=True, exist_ok=True)
     torch.save(result, f'embeddings/{preprocess}{post_fix}.pt')
     
     return result
