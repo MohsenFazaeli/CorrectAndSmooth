@@ -1,3 +1,6 @@
+# my extention for test on cpu 
+ The orginal git(https://github.com/CUAI/CorrectAndSmooth)
+ 
 # Correct and Smooth (C&S) OGB submissions
 
 Paper: https://arxiv.org/abs/2010.13993
